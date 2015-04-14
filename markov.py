@@ -1,6 +1,8 @@
 import sys
 import random
 
+script,filename = sys.argv
+
 def make_chains(filename):
     """Takes input text as string; returns dictionary of markov chains."""
 
@@ -52,22 +54,16 @@ def make_text(dictionary):
     return new_text_string
 
 
-
-#    return "Here's some random text."
-
-
-print make_text(make_chains("green-eggs.txt"))
-
 # Change this to read input_text from a file, deciding which file should
 # be used by examining the `sys.argv` arguments (if neccessary, see the
 # Python docs for sys.argv)
 
-# input_text = "Some text"
+input_text = filename
 
-# # Get a Markov chain
-# chain_dict = make_chains(input_text)
+# Get a Markov chain
+chain_dict = make_chains(input_text)
 
-# # Produce random text
-# random_text = make_text(chain_dict)
+# Produce random text
+random_text = make_text(chain_dict)
 
-# # print random_text
+print random_text
