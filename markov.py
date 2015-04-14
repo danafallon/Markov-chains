@@ -9,28 +9,13 @@ def make_chains(filename):
     corpus = open(filename)
 
     word_list = corpus.read().split()
-
-    n = 0
-    keys_list = []
-    for word in word_list:
-        bigram = tuple(word_list[n:(n+2)])
-        keys_list.append(bigram)
-        n = n + 1
-
-    keys_list.pop()
-
     dictionary = {}
-    i = 0
-    for key in keys_list[:-1]:
-        if dictionary.get(key) == None:
-            dictionary[key] = [keys_list[i+1][1]]
-        else:
-            dictionary[key].append(keys_list[i+1][1])
-        i += 1
 
+    for i in range(len(word_list)-2):
+        key = (word_list[i], word_list[i+1])
+        dictionary.setdefault(key, []).append(word_list[i+2])
+  
     return dictionary
-
-
 
 
 
