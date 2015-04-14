@@ -23,11 +23,14 @@ def make_chains(filename):
 def make_text(dictionary):
     """Takes dictionary of markov chains; returns random text."""
 
-   
-    starting_key = random.choice(dictionary.keys())         # choose key (tuple) to start at
+    capital_keys_list = [key for key in dictionary.keys() if key[0][0].isupper()]
+    starting_key = random.choice(capital_keys_list)         # choose key (tuple) to start at
     new_text_list = list(starting_key)                       # add items in that tuple to list of created text
    
-    while dictionary.get(starting_key) != None:
+    punctuation = "?.!"
+    next_word = " "
+
+    while dictionary.get(starting_key) != None and next_word[-1] not in punctuation:
         value_list = dictionary[starting_key]               # assign value of key (list)
         rand_index = random.randrange(0, len(value_list))   # choose random int w/in length of list
         next_word = value_list[rand_index]                  # find item at that random index
