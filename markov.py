@@ -8,13 +8,13 @@ def make_chains(filename, ngram):
 
     corpus = open(filename)
 
-    word_list = corpus.read().split()                       #read in text of file as a list
-    dictionary = {}                                         # initialize empty dictionary
+    word_list = corpus.read().split()                           # read in text of file as a list
+    dictionary = {}                                             # initialize empty dictionary
 
-    n = int(ngram)                                               # set n (number of items in tuples)
-    for i in range(len(word_list)-n):                       # loop over list items to fill dictionary
-        key = tuple(word_list[i:(i+n)])                     # make keys in dictionary tuples of n items
-        dictionary.setdefault(key, []).append(word_list[i+n]) # use setdefault to create values of dictionary
+    n = int(ngram)                                              # set n (number of items in tuples)
+    for i in range(len(word_list)-n):                           # loop over list items to fill dictionary
+        key = tuple(word_list[i:(i+n)])                         # make keys in dictionary tuples of n items
+        dictionary.setdefault(key, []).append(word_list[i+n])   # use setdefault to create values of dictionary
     
     return dictionary
 
@@ -24,11 +24,11 @@ def make_text(dictionary):
     """Takes dictionary of markov chains; returns random text."""
 
     capital_keys_list = [key for key in dictionary.keys() if key[0][0].isupper()]   # create list of only keys that start with an uppercase letter
-    starting_key = random.choice(capital_keys_list)         # choose key (tuple) to start at
-    new_text_list = list(starting_key)                       # add items in that tuple to list of created text
+    starting_key = random.choice(capital_keys_list)             # choose key (tuple) to start at
+    new_text_list = list(starting_key)                          # add items in that tuple to list of created text
    
-    punctuation = "?.!"                                     # create punctuation string    
-    next_word = " "                                         # initialize next_word
+    punctuation = "?.!"                                         # create punctuation string    
+    next_word = " "                                             # initialize next_word
 
     while dictionary.get(starting_key) != None and next_word[-1] not in punctuation: # Continue until the key is not found in the dictionary and until the last word ends in punctuation
         value_list = dictionary[starting_key]               # assign value of key (list)
@@ -43,16 +43,13 @@ def make_text(dictionary):
     return new_text_string                                  # return new text
 
 
-# Change this to read input_text from a file, deciding which file should
-# be used by examining the `sys.argv` arguments (if neccessary, see the
-# Python docs for sys.argv)
 
-input_text = filename
+def main():                                                 # define main function
+    input_text = filename
+    chain_dict = make_chains(input_text, ngram)             # Get a Markov chain
+    random_text = make_text(chain_dict)                     # Produce random text
 
-# Get a Markov chain
-chain_dict = make_chains(input_text, ngram)
+    print random_text
 
-# Produce random text
-random_text = make_text(chain_dict)
-
-print random_text
+if __name__ == "__main__":                                  # main() will only run if program is run directly
+    main()
